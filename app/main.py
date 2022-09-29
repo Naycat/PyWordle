@@ -31,10 +31,20 @@ def main():
         while userguess.current_try <= userguess.maxtries:
             userguess.check_guess()
             gamescore.end_of_game(userguess.on_game_end())
+            gamescore.draw_score_board()
+            gamescore.save_scores_to_file(file=True)
             play_on = True if input(
-                "Do you  want to play Again?") == "y" else False
+                "Do you  want to play Again?") == "y" else exit()
+            userinput = control_input(
+                input("Let's start!\n Please enter your 5 letter guess!\n"))
+            userguess = gengine(userinput)
+            if play_on == False:
+                exit()
+                break
+
         if play_on == False:
             exit()
+            break
 
 
 if __name__ == "__main__":

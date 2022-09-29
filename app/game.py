@@ -115,8 +115,24 @@ class PyWordle1982:
         # nonlocal gresult
         tries = self.current_try
         gresult = self.game_result
+        self.guess = ""
+        self.reset()
 
-        return tries, gresult
+        return [tries, gresult]
+
+    def reset(self):
+        self.hint = ""
+        self.secretword = h.get_random_word().upper()
+        self.maxtries = 6
+        self.right_letters = []
+        self.wrong_place = []
+        self.not_in_word = []
+        self.right_guess = False
+        self.current_try = 0
+        self.history = config.empty_wordle
+        self.hint_result = []
+        self.game_on = False
+        self.game_result = ""
     # def game_history(self):
 
     # getting inputs

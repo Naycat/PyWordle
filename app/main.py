@@ -35,6 +35,7 @@ def main():
             gamescore.save_scores_to_file(file=True)
             play_on = True if input(
                 "Do you  want to play Again?") == "y" else exit()
+            os.system("Clear")
             userinput = control_input(
                 input("Let's start!\n Please enter your 5 letter guess!\n"))
             userguess = gengine(userinput)

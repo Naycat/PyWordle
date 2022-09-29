@@ -2,6 +2,7 @@
 import config
 import helper as h
 import os
+import copy
 
 
 class PyWordle1982:
@@ -18,7 +19,7 @@ class PyWordle1982:
         self.not_in_word = []
         self.right_guess = False
         self.current_try = 0
-        self.history = config.empty_wordle
+        self.history = copy.deepcopy(config.empty_wordle)
         self.hint_result = []
         self.game_on = False
         self.game_result = ""
@@ -80,7 +81,7 @@ class PyWordle1982:
             self.create_hints()
             self.print_and_save_hints()
             if self.guess == self.secretword:
-                os.system("clear")
+                # os.system("clear")
                 self.right_guess = True
                 self.history.update({"Solution": str(f"|{h.colorizer('green', self.secretword[0])}|{h.colorizer('green', self.secretword[1])}|{h.colorizer('green', self.secretword[2])}|{h.colorizer('green', self.secretword[3])}|\
 {h.colorizer('green', self.secretword[4])}| \n+ --- + --- + --- + --- + --- + \n")})
@@ -90,6 +91,7 @@ class PyWordle1982:
                 self.game_on = False
                 print(self.game_on)
                 self.on_game_end()
+                # os.system("clear")
                 break
             elif self.current_try == self.maxtries:
                 os.system("clear")
@@ -117,6 +119,7 @@ class PyWordle1982:
         gresult = self.game_result
         self.guess = ""
         self.reset()
+        # os.system("clear")
 
         return [tries, gresult]
 
@@ -129,7 +132,7 @@ class PyWordle1982:
         self.not_in_word = []
         self.right_guess = False
         self.current_try = 0
-        self.history = config.empty_wordle
+        self.history = copy.deepcopy(config.empty_wordle)
         self.hint_result = []
         self.game_on = False
         self.game_result = ""

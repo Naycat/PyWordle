@@ -1,6 +1,7 @@
 """Game module"""
 import config
 import helper as h
+import os
 
 
 class PyWordle1982:
@@ -19,6 +20,8 @@ class PyWordle1982:
         self.current_try = 0
         self.history = config.empty_wordle
         self.hint_result = []
+        self.game_on = False
+        self.game_result = ""
 
     def create_hints(self):
         """
@@ -70,24 +73,50 @@ class PyWordle1982:
         print(keyboard_str)
 
     def check_guess(self):
+        self.game_on = True
         while True:
             self.current_try += 1
+            print(self.current_try)
             self.create_hints()
             self.print_and_save_hints()
             if self.guess == self.secretword:
+                os.system("clear")
                 self.right_guess = True
-                print("Acertaste!")
-                exit()
+                self.history.update({"Solution": str(f"|{h.colorizer('green', self.secretword[0])}|{h.colorizer('green', self.secretword[1])}|{h.colorizer('green', self.secretword[2])}|{h.colorizer('green', self.secretword[3])}|\
+{h.colorizer('green', self.secretword[4])}| \n+ --- + --- + --- + --- + --- + \n")})
+                print("".join(self.history.values()))
+                print(config.you_won_text)
+                self.game_result = "win"
+                self.game_on = False
+                print(self.game_on)
+                self.on_game_end()
                 break
             elif self.current_try == self.maxtries:
+                os.system("clear")
                 print("You didn't guess the right word. The answer was:",
                       self.secretword)
-                exit()
+                self.history.update({"Solution": str(f"|{h.colorizer('green', self.secretword[0])}|{h.colorizer('green', self.secretword[1])}|{h.colorizer('green', self.secretword[2])}|{h.colorizer('green', self.secretword[3])}|\
+{h.colorizer('green', self.secretword[4])}| \n+ --- + --- + --- + --- + --- + \n")})
+                print("".join(self.history.values()))
+                print(config.game_over_text)
+                self.game_result = "lost"
+                self.game_on = False
+                print(self.game_on)
+                self.on_game_end()
+
                 break
             else:
                 self.guess = h.control_input(
                     input("Try again, write anotherword: \n"))
+                os.system("clear")
 
+    def on_game_end(self):
+        # nonlocal tries
+        # nonlocal gresult
+        tries = self.current_try
+        gresult = self.game_result
+
+        return tries, gresult
     # def game_history(self):
 
     # getting inputs
